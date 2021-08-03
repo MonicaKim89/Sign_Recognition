@@ -23,7 +23,7 @@ import math
 from scipy import ndimage
 import argparse
 import imutils
-
+import xml.etree.ElementTree as ET
 
 
 #시각화
@@ -57,6 +57,7 @@ def file_list(path):
 
 def direct_show(path):
     img = cv2.imread(path, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     plt.figure(figsize = (10,8))
     #xticks/yticks - 눈금표
     plt.xticks([])
@@ -71,6 +72,7 @@ def direct_show(path):
 
 def INPUT_IMG(path):
     img = cv2.imread(path, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img
 
 
