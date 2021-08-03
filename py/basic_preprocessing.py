@@ -112,6 +112,7 @@ def get_img(path):
     img_list=[]
     for f1 in files:
         img = cv2.imread(f1)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img_list.append(img)
 #     print('이미지수',len(img_list))
 #     print('show(get_img(list_file[1])[0]) 식으로 이미지 불러와서 img로 저장')

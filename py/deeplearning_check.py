@@ -67,7 +67,7 @@ from keras import models
 from keras import layers
 from keras import optimizers
 from keras import backend as K
-
+from keras.models import load_model
 
 # In[ ]:
 
@@ -78,61 +78,75 @@ def gpu_check():
 
 # In[ ]:
 
+def evaluating_each(model, test_generator):
+    
+    result = model.evaluate(test_generator)
+    
+    loss = result[0]
+    accuracy = result[1]
+    precision = result[2]
+    recall = result[3]
+    f_p = int(result[4])
+    f_n = int(result[5])
+    t_p = int(result[6])
+    t_n = int(result[7])
+    
+    f1_score = (2 * recall * precision) / (recall + precision + K.epsilon())
+    sensitivity = t_p / (t_p + f_n)
+    specificity = t_n/ (t_n + f_p)
+    
+    print("""\nloss:{:.3f}, \naccuracy:{:.3f}, \nprecision:{:.3f}, \nrecall:{:.3f}, \nFalse_positive:{}, \nFalse_negative, :{}, \nTrue_positive:{}, \nTrue_negative:{}, \nSensitivity:{:.3f}, \nSpecificity:{:.3f}, \nF1_score:{:.3f}""".format(loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score))
+    return loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score
 
-def recall(y_target, y_pred):
-    # clip(t, clip_value_min, clip_value_max) : clip_value_min~clip_value_max 이외 가장자리를 깎아 낸다
-    # round : 반올림한다
-    y_target_yn = K.round(K.clip(y_target, 0, 1)) # 실제값을 0(Negative) 또는 1(Positive)로 설정한다
-    y_pred_yn = K.round(K.clip(y_pred, 0, 1)) # 예측값을 0(Negative) 또는 1(Positive)로 설정한다
+def get_label_dict(train_generator ):
+# Get label to class_id mapping
+    labels = (train_generator.class_indices)
+    label_dict = dict((v,k) for k,v in labels.items())
+    return  label_dict   
 
-    # True Positive는 실제 값과 예측 값이 모두 1(Positive)인 경우이다
-    count_true_positive = K.sum(y_target_yn * y_pred_yn) 
+def get_labels( generator ):
+    generator.reset()
+    labels = []
+    for i in range(len(generator)):
+        labels.extend(np.array(generator[i][1]) )
+    return np.argmax(labels, axis =1)
 
-    # (True Positive + False Negative) = 실제 값이 1(Positive) 전체
-    count_true_positive_false_negative = K.sum(y_target_yn)
+def get_pred_labels( test_generator):
+    test_generator.reset()
+    pred_vec=model.predict_generator(test_generator,
+                                     steps=test_generator.n, #test_generator.batch_size
+                                     verbose=1)
+    return np.argmax( pred_vec, axis = 1), np.max(pred_vec, axis = 1)
 
-    # Recall =  (True Positive) / (True Positive + False Negative)
-    # K.epsilon()는 'divide by zero error' 예방차원에서 작은 수를 더한다
-    recall = count_true_positive / (count_true_positive_false_negative + K.epsilon())
+def plot_history( H, NUM_EPOCHS ):
+    plt.style.use("ggplot")
+    fig = plt.figure()
+    fig.set_size_inches(15, 5)
+    
+    fig.add_subplot(1, 3, 1)
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["loss"], label="train_loss")
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["val_loss"], label="val_loss")
+    plt.title("Training Loss and Validation Loss on Dataset")
+    plt.xlabel("Epoch #")
+    plt.ylabel("Loss")
+    plt.legend(loc="lower left")
 
-    # return a single tensor value
-    return recall
-
-
-def precision(y_target, y_pred):
-    # clip(t, clip_value_min, clip_value_max) : clip_value_min~clip_value_max 이외 가장자리를 깎아 낸다
-    # round : 반올림한다
-    y_pred_yn = K.round(K.clip(y_pred, 0, 1)) # 예측값을 0(Negative) 또는 1(Positive)로 설정한다
-    y_target_yn = K.round(K.clip(y_target, 0, 1)) # 실제값을 0(Negative) 또는 1(Positive)로 설정한다
-
-    # True Positive는 실제 값과 예측 값이 모두 1(Positive)인 경우이다
-    count_true_positive = K.sum(y_target_yn * y_pred_yn) 
-
-    # (True Positive + False Positive) = 예측 값이 1(Positive) 전체
-    count_true_positive_false_positive = K.sum(y_pred_yn)
-
-    # Precision = (True Positive) / (True Positive + False Positive)
-    # K.epsilon()는 'divide by zero error' 예방차원에서 작은 수를 더한다
-    precision = count_true_positive / (count_true_positive_false_positive + K.epsilon())
-
-    # return a single tensor value
-    return precision
-
-#따로 작성해줘야함
-def f1score(_recall, _precision):
-    _f1score = ( 2 * _recall * _precision) / (_recall + _precision+ K.epsilon())
-    # return a single tensor value
-    return _f1score
-
-
-#feature 넣어주기
-def metrix_check(features):
-    _loss, _acc, _precision, _recall, _fp, _fn  = model.evaluate(features, batch_size=batch_size)
-    return print('\n loss: {:.3f}, accuracy: {:.3f}, precision: {:.3f}, recall: {:.3f}, false_positive: {:.3f}, false_negative: {:.3f}, f1score: {:.3f}'      .format(_loss, _acc, _precision, _recall, _fp, _fn, f1score(_recall, _precision)))
-
-
-# In[ ]:
+    
+    fig.add_subplot(1, 3, 2)
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["loss"], label="train_loss")
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["accuracy"], label="train_accuracy")
+    plt.title("Training Loss and Accuracy on Dataset")
+    plt.xlabel("Epoch #")
+    plt.ylabel("Loss/Accuracy")
+    plt.legend(loc="lower left")
+    
+    fig.add_subplot(1, 3, 3)
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["val_loss"], label="val_loss")
+    plt.plot(np.arange(0, NUM_EPOCHS), H.history["val_accuracy"], label="val_accuracy")
+    plt.title("Validation Loss and Accuracy on Dataset")
+    plt.xlabel("Epoch #")
+    plt.ylabel("Loss/Accuracy")
+    plt.legend(loc="lower left")
 
 
-
-
+    plt.show()
