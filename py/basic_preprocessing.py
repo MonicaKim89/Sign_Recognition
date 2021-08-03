@@ -49,7 +49,7 @@ sns.set(font="AppleGothic",
 def file_list(path):
     file_list = os.listdir(path)
     file_list.sort()
-    file_list = file_list[1:]
+    
     list_file = []
     for i in file_list:
         list_file.append(path+i)
