@@ -68,6 +68,13 @@ from keras import layers
 from keras import optimizers
 from keras import backend as K
 from keras.models import load_model
+from keras import Input
+from keras.callbacks import ModelCheckpoint
+
+
+#dataset
+import splitfolders
+from sklearn.model_selection import train_test_split
 
 # In[ ]:
 
@@ -111,7 +118,7 @@ def get_labels( generator ):
         labels.extend(np.array(generator[i][1]) )
     return np.argmax(labels, axis =1)
 
-def get_pred_labels( test_generator):
+def get_pred_labels(model, test_generator):
     test_generator.reset()
     pred_vec=model.predict_generator(test_generator,
                                      steps=test_generator.n, #test_generator.batch_size
