@@ -32,6 +32,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 get_ipython().run_line_magic('matplotlib', 'inline')
 
+import matplotlib.image as mpimg
 from matplotlib import font_manager, rc
 rc('font',family="AppleGothic")
 plt.rcParams["font.family"]="AppleGothic" #plt 한글꺠짐
@@ -179,3 +180,18 @@ def img_trim(img):
 
     return img_trim
 
+
+#이미지 로테이션
+def img_rotation(img, num):
+    try:
+        if num==90:
+             img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE) # 시계방향으로 90도 회전
+        elif num==180:
+            img = cv2.rotate(img, cv2.ROTATE_180) # 180도 회전
+        elif num==270:
+            img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE) # 반시계방향으로 90도 회전 
+                                                         # = 시계방향으로 270도 회전
+    except:
+        print('에러')
+        
+    return img
