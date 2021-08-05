@@ -93,25 +93,6 @@ def gpu_check():
 
 # In[ ]:
 
-def evaluating_each(model, test_generator):
-    
-    result = model.evaluate(test_generator)
-    
-    loss = result[0]
-    accuracy = result[1]
-    precision = result[2]
-    recall = result[3]
-    f_p = int(result[4])
-    f_n = int(result[5])
-    t_p = int(result[6])
-    t_n = int(result[7])
-    
-    f1_score = (2 * recall * precision) / (recall + precision + K.epsilon())
-    sensitivity = t_p / (t_p + f_n)
-    specificity = t_n/ (t_n + f_p)
-    
-    print("""\nloss:{:.3f}, \naccuracy:{:.3f}, \nprecision:{:.3f}, \nrecall:{:.3f}, \nFalse_positive:{}, \nFalse_negative, :{}, \nTrue_positive:{}, \nTrue_negative:{}, \nSensitivity:{:.3f}, \nSpecificity:{:.3f}, \nF1_score:{:.3f}""".format(loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score))
-    return loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score
 
 def get_label_dict(train_generator ):
 # Get label to class_id mapping
