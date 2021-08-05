@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import cv2
@@ -17,6 +17,7 @@ from IPython import get_ipython
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 #cv
+import cv2
 import math
 from PIL import Image
 import math
@@ -123,7 +124,7 @@ def get_img(path):
     return img_list
 
 
-# In[ ]:
+# In[5]:
 
 
 def img_trim(img):
@@ -182,7 +183,7 @@ def img_trim(img):
 
 
 
-# In[ ]:
+# In[6]:
 
 #이미지 로테이션
 def img_rotation(img, num):
@@ -198,5 +199,4 @@ def img_rotation(img, num):
         print('에러')
         
     return img
-# %%
 
