@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import cv2
@@ -13,10 +13,10 @@ from sklearn.linear_model import LinearRegression
 import seaborn as sns
 import glob
 import math
+from IPython import get_ipython
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 #cv
-import cv2
 import math
 from PIL import Image
 import math
@@ -181,6 +181,9 @@ def img_trim(img):
     return img_trim
 
 
+
+# In[ ]:
+
 #이미지 로테이션
 def img_rotation(img, num):
     try:
@@ -195,3 +198,5 @@ def img_rotation(img, num):
         print('에러')
         
     return img
+# %%
+
