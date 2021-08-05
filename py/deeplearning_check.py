@@ -14,6 +14,7 @@ from IPython.display import display
 import PIL
 from tensorflow.python.client import device_lib
 from sklearn.utils import class_weight
+import random
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -61,6 +62,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 from tensorflow.keras.preprocessing import image
 
+
+
 #keras
 import keras
 from keras import models
@@ -70,6 +73,11 @@ from keras import backend as K
 from keras.models import load_model
 from keras import Input
 from keras.callbacks import ModelCheckpoint
+from keras.layers.convolutional import Conv2D
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Dense, Dropout, Activation
+from keras.optimizers import SGD
 
 
 #dataset
@@ -157,3 +165,20 @@ def plot_history( H, NUM_EPOCHS ):
 
 
     plt.show()
+
+SEED = 1337
+
+def set_seeds(seed=SEED):
+    os.environ['PYTHONHASHSEED']= str(seed)
+    random.seed(seed)
+    tf.random.set_seed(seed)
+    np.random.seed(seed)
+
+def set_global_determinism(seed=SEED):
+    set_seeds(seed=seed)
+    os.environ['TF_DETERMINISTIC_OPS']= '1'
+    os.environ['TF_CUDNN_DETERMINISTIC']= '1'
+    tf.config.threading.set_inter_op_parallelism_threads(1)
+    tf.config.threading.set_intra_op_parallelism_threads(1)
+# Call the above function with seed value
+set_global_determinism(seed=SEED)
