@@ -14,6 +14,7 @@ from IPython.display import display
 import PIL
 from tensorflow.python.client import device_lib
 from sklearn.utils import class_weight
+import random
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -61,6 +62,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 from tensorflow.keras.preprocessing import image
 
+
+
 #keras
 import keras
 from keras import models
@@ -70,6 +73,11 @@ from keras import backend as K
 from keras.models import load_model
 from keras import Input
 from keras.callbacks import ModelCheckpoint
+from keras.layers.convolutional import Conv2D
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Dense, Dropout, Activation
+from keras.optimizers import SGD
 
 
 #dataset
@@ -85,25 +93,6 @@ def gpu_check():
 
 # In[ ]:
 
-def evaluating_each(model, test_generator):
-    
-    result = model.evaluate(test_generator)
-    
-    loss = result[0]
-    accuracy = result[1]
-    precision = result[2]
-    recall = result[3]
-    f_p = int(result[4])
-    f_n = int(result[5])
-    t_p = int(result[6])
-    t_n = int(result[7])
-    
-    f1_score = (2 * recall * precision) / (recall + precision + K.epsilon())
-    sensitivity = t_p / (t_p + f_n)
-    specificity = t_n/ (t_n + f_p)
-    
-    print("""\nloss:{:.3f}, \naccuracy:{:.3f}, \nprecision:{:.3f}, \nrecall:{:.3f}, \nFalse_positive:{}, \nFalse_negative, :{}, \nTrue_positive:{}, \nTrue_negative:{}, \nSensitivity:{:.3f}, \nSpecificity:{:.3f}, \nF1_score:{:.3f}""".format(loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score))
-    return loss, accuracy, precision, recall, f_p, f_n, t_p, t_n, sensitivity, specificity, f1_score
 
 def get_label_dict(train_generator ):
 # Get label to class_id mapping
@@ -157,3 +146,20 @@ def plot_history( H, NUM_EPOCHS ):
 
 
     plt.show()
+
+SEED = 1337
+
+def set_seeds(seed=SEED):
+    os.environ['PYTHONHASHSEED']= str(seed)
+    random.seed(seed)
+    tf.random.set_seed(seed)
+    np.random.seed(seed)
+
+def set_global_determinism(seed=SEED):
+    set_seeds(seed=seed)
+    os.environ['TF_DETERMINISTIC_OPS']= '1'
+    os.environ['TF_CUDNN_DETERMINISTIC']= '1'
+    tf.config.threading.set_inter_op_parallelism_threads(1)
+    tf.config.threading.set_intra_op_parallelism_threads(1)
+# Call the above function with seed value
+set_global_determinism(seed=SEED)
