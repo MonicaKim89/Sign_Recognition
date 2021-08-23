@@ -103,7 +103,9 @@ def count_img(path):
     for f1 in files:
         img = cv2.imread(f1)
         img_list.append(img)
-    print('이미지수',len(img_list)) 
+        a = len(img_list)
+        print('이미지수',len(img_list))
+        
 
 
 # In[4]:
