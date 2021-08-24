@@ -113,12 +113,22 @@ def get_labels( generator ):
         labels.extend(np.array(generator[i][1]) )
     return np.argmax(labels, axis =1)
 
+# def get_pred_labels(model, test_generator):
+#     test_generator.reset()
+#     pred_vec=model.predict_generator(test_generator,
+#                                      steps=test_generator.n, #test_generator.batch_size
+#                                      verbose=1)
+#  
+#     return np.argmax( pred_vec, axis = 1), np.max(pred_vec, axis = 1)
+
 def get_pred_labels(model, test_generator):
     test_generator.reset()
     pred_vec=model.predict_generator(test_generator,
                                      steps=test_generator.n, #test_generator.batch_size
                                      verbose=1)
-    return np.argmax( pred_vec, axis = 1), np.max(pred_vec, axis = 1)
+    predicted_classes = np.argmax(pred_vec, axis=1)
+    pred_labels = predicted_classes.tolist()
+    return pred_labels
 
 def plot_history( H, NUM_EPOCHS ):
     plt.style.use("ggplot")

@@ -99,7 +99,6 @@ def show(img):
 def count_img(path):
     os.chdir(path)
     files = os.listdir(path)
-    jg = []
     for num, i in enumerate(files):
         if i[-1] =='g':
             num +=1
