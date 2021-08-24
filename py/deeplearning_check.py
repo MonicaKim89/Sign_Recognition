@@ -12,10 +12,7 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)'
 from IPython.display import display
 import PIL
-from tensorflow.python.client import device_lib
-from sklearn.utils import class_weight
 import random
-
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib
@@ -51,6 +48,10 @@ if platform.system() == 'Darwin': # Mac 환경 폰트 설정
 elif platform.system() == 'Windows': # Windows 환경 폰트 설정
     plt.rc('font', family='Malgun Gothic')
 
+#scikit-learn
+from sklearn.utils import class_weight
+from sklearn.metrics import classification_report
+
 #tensorflow
 import tensorflow as tf
 from tensorflow.keras.applications import ResNet50
@@ -61,8 +62,10 @@ from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 from tensorflow.keras.preprocessing import image
-
-
+from tensorflow.python.client import device_lib
+from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 #keras
 from tensorflow import keras
@@ -72,7 +75,7 @@ from keras import optimizers
 from keras import backend as K
 from keras.models import load_model
 from keras import Input
-from keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint
 from keras.layers.convolutional import Conv2D
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
@@ -89,6 +92,9 @@ from sklearn.model_selection import train_test_split
 
 def gpu_check():
     print(device_lib.list_local_devices())
+    print('tf',tf.__version__)
+    print('keras',keras.__version__)
+    
 
 
 # In[ ]:
