@@ -97,14 +97,13 @@ def show(img):
 
 #이미지 수 확인하기
 def count_img(path):
-    data_path = os.path.join(path, '*g')
-    files= glob.glob(data_path)
-    img_list=[]
-    for f1 in files:
-        img = cv2.imread(f1)
-        img_list.append(img)
-    print('이미지수',len(img_list)) 
-        
+    os.chdir(path)
+    files = os.listdir(path)
+    jg = []
+    for num, i in enumerate(files):
+        if i[-1] =='g':
+            num +=1
+    print('이미지 수', num)
 
 
 # In[4]:
