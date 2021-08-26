@@ -173,3 +173,12 @@ def set_global_determinism(seed=SEED):
     tf.config.threading.set_intra_op_parallelism_threads(1)
 # Call the above function with seed value
 set_global_determinism(seed=SEED)
+
+
+
+class AttLayer(keras.layers.Layer):
+    def __init__(self, attention_dim, **kwargs):
+        self.init = initializers.get('normal')
+        self.supports_masking = True
+        self.attention_dim = attention_dim
+        super(AttLayer, self).__init__(**kwargs)
