@@ -49,7 +49,7 @@ sns.set(font="AppleGothic",
 
 # In[3]:
 
-def file_list(path):
+def get_file_list(path):
     file_list = os.listdir(path)
     file_list.sort()
     
