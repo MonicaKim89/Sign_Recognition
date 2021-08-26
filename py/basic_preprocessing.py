@@ -8,6 +8,7 @@ import cv2
 import os
 import numpy as np
 import pandas as pd
+pd.set_option('display.max_rows', None)
 import matplotlib.pylab as plt
 from sklearn.linear_model import LinearRegression
 import seaborn as sns
