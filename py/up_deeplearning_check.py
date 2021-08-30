@@ -124,6 +124,17 @@ def get_pred_labels(model, test_generator):
     pred_labels = predicted_classes.tolist()
     return pred_labels
 
+
+def test_file_name(test_generator):
+    test_file_name = []
+
+    for file in test_generator.filenames:
+        test_file_name.append(file)
+        
+    return test_file_name
+
+
+
 def plot_history( H, NUM_EPOCHS ):
     plt.style.use("ggplot")
     fig = plt.figure()
