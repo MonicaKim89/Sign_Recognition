@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 import cv2
 import math
 import os
@@ -67,38 +64,34 @@ from tensorflow.python.client import device_lib
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
-
-#keras
 from tensorflow import keras
-from keras import models
-from keras import layers
-from keras import optimizers
-from keras import backend as K
-from keras.models import load_model
-from keras import Input
+from tensorflow.keras import models
+from tensorflow.keras import layers
+from tensorflow.keras import optimizers
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import load_model
+from tensorflow.keras import Input
 from tensorflow.keras.callbacks import ModelCheckpoint
 from keras.layers.convolutional import Conv2D
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Dense, Dropout, Activation
-from keras.optimizers import SGD
+from tensorflow.keras.layers import Dense, Dropout, Activation
+from tensorflow.keras.optimizers import SGD
 
 
 #dataset
 import splitfolders
 from sklearn.model_selection import train_test_split
 
-# In[ ]:
-
 
 def gpu_check():
     print(device_lib.list_local_devices())
     print('tf',tf.__version__)
     print('keras',keras.__version__)
+    print('set_global_determinism(seed=1337) 이거 꼭 해라')
+    print('set_global_determinism(seed=1337) 이거 꼭 해라')
+    print('set_global_determinism(seed=1337) 이거 꼭 해라')
     
-
-
-# In[ ]:
 
 
 def get_label_dict(train_generator ):
@@ -130,6 +123,17 @@ def get_pred_labels(model, test_generator):
     predicted_classes = np.argmax(pred_vec, axis=1)
     pred_labels = predicted_classes.tolist()
     return pred_labels
+
+
+def test_file_name(test_generator):
+    test_file_name = []
+
+    for file in test_generator.filenames:
+        test_file_name.append(file)
+        
+    return test_file_name
+
+
 
 def plot_history( H, NUM_EPOCHS ):
     plt.style.use("ggplot")
@@ -180,3 +184,12 @@ def set_global_determinism(seed=SEED):
     tf.config.threading.set_intra_op_parallelism_threads(1)
 # Call the above function with seed value
 set_global_determinism(seed=SEED)
+
+
+
+class AttLayer(keras.layers.Layer):
+    def __init__(self, attention_dim, **kwargs):
+        self.init = initializers.get('normal')
+        self.supports_masking = True
+        self.attention_dim = attention_dim
+        super(AttLayer, self).__init__(**kwargs)
