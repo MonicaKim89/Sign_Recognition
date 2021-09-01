@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import pickle
 import random
 
+
+import sklearn
+
 #datset
 from sklearn.model_selection import train_test_split
 
@@ -49,7 +52,7 @@ def sav_model_loading (model_path):
 
 
 # dataset
-def data_for_ml (categories, data_path):
+def data_for_ml (categories, data_path, num):
     data = []
 
     
@@ -64,11 +67,11 @@ def data_for_ml (categories, data_path):
 
             try: 
                 pet_img = cv2.imread(imgpath, 0)
-                pet_img = cv2.resize(pet_img, (200,200))
+                pet_img = cv2.resize(pet_img, (num, num))
 
-                image = np.array(pet_img).flatten()
+                images = np.array(pet_img).flatten()
 
-                data.append([image, label])
+                data.append([images, label])
 
             except Exception as e:
                 pass
@@ -76,26 +79,22 @@ def data_for_ml (categories, data_path):
     print('data수: ', len(data))
     return data
 
-def feature_label_maker(pickle_name, data):
-    pick_in = open(pickle_name, 'wb')
-    pickle.dump(data, pick_in)
-    pick_in.close()
-
-    pick_in = open(pickle_name, 'rb')
-    data = pickle.load(pick_in)
-    pick_in.close()
-
-    features = []
-    labels = []
-
+def feature_label_maker(data):
+    features=[]
+    labels=[]
     for feature, label in data:
         features.append(feature)
         labels.append(label)
-    
-    print(len(features))
-    print(len(labels))
-    
+        
+#     features = np.array(features)
+    print('features: ', len(features))
+    print('features ex: ', features[0])
+    print('labels: ', len(labels))
+    print('labels ex: ', labels[0])
+    features = np.array(features)
+    labels = np.array(labels)
     return features, labels
+
 
 #plots
 def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
