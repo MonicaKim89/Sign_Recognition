@@ -39,6 +39,32 @@ def sav_model_loading (model_path):
 
 
 # dataset
+def data_for_ml (categories, data_path):
+    data = []
+
+    
+
+    for category in categories:
+        file_path = os.path.join(data_path, category)
+        print(file_path)
+        label = categories.index(category)
+
+        for img in os.listdir(file_path):
+            imgpath = os.path.join(file_path, img)
+
+            try: 
+                pet_img = cv2.imread(imgpath, 0)
+                pet_img = cv2.resize(pet_img, (200,200))
+
+                image = np.array(pet_img).flatten()
+
+                data.append([image, label])
+
+            except Exception as e:
+                pass
+
+    print('data수: ', len(data))
+    return data
 
 def feature_label_maker(pickle_name, data):
     pick_in = open(pickle_name, 'wb')
@@ -55,5 +81,8 @@ def feature_label_maker(pickle_name, data):
     for feature, label in data:
         features.append(feature)
         labels.append(label)
-        
+    
+    print(len(features))
+    print(len(labels))
+    
     return features, labels
