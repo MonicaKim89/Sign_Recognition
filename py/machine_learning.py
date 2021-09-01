@@ -6,8 +6,15 @@ import matplotlib.pyplot as plt
 import pickle
 import random
 
-#model
+#datset
 from sklearn.model_selection import train_test_split
+
+##dataset preprocessing
+from sklearn.preprocessing import StandardScaler
+
+#multiclass classifier
+from sklearn.multiclass import OneVsOneClassifier
+from sklearn.multiclass import OneVsRestClassifier
 
 #svm
 from sklearn.svm import SVC
@@ -15,6 +22,8 @@ from sklearn.svm import SVC
 #validation
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_val_score
 
 #evaluation
 from sklearn.metrics import confusion_matrix
@@ -24,6 +33,7 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import roc_curve
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import classification_report
 
 
 #model
@@ -86,3 +96,9 @@ def feature_label_maker(pickle_name, data):
     print(len(labels))
     
     return features, labels
+
+#plots
+def plot_precision_recall_vs_threshold(precision, recalls, thresholds):
+    plt.plot(thresholds, precision[:-1], 'b--', label ='precision')
+    plt.plot(thresholds, recalls[:-1], 'g--', label = 'recall')
+    plt.legend()
