@@ -98,7 +98,15 @@ def feature_label_maker(pickle_name, data):
     return features, labels
 
 #plots
-def plot_precision_recall_vs_threshold(precision, recalls, thresholds):
-    plt.plot(thresholds, precision[:-1], 'b--', label ='precision')
+def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+    plt.plot(thresholds, precisions[:-1], 'b--', label ='precision')
     plt.plot(thresholds, recalls[:-1], 'g--', label = 'recall')
     plt.legend()
+
+## 재현율에 대한 정밀도곡선을 그려서 정밀도/재현율 trade-off확인해보기
+def plot_precision_vs_recall(precisions, recalls):
+    plt.plot(recalls, precisions, "b-", linewidth=2)
+    plt.xlabel("Recall", fontsize=16)
+    plt.ylabel("Precision", fontsize=16)
+    plt.axis([0, 1, 0, 1])
+    plt.grid(True)
