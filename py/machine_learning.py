@@ -5,9 +5,11 @@ import matplotlib.pyplot as plt
 
 import pickle
 import random
+import joblib #scikit learn 모델저장
 
-
+# scikit learn
 import sklearn
+from sklearn.externals import joblib
 
 #datset
 from sklearn.model_selection import train_test_split
@@ -39,7 +41,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import classification_report
 
 
-#model
+# model
 def sav_model_loading (model_path):
     model_file = open(model_path, 'rb')
     model = pickle.load(model_file)
@@ -86,13 +88,17 @@ def feature_label_maker(data):
         features.append(feature)
         labels.append(label)
         
-#     features = np.array(features)
-    print('features: ', len(features))
-    print('features ex: ', features[0])
-    print('labels: ', len(labels))
-    print('labels ex: ', labels[0])
     features = np.array(features)
     labels = np.array(labels)
+
+    print('features: ', len(features))
+    print('features ex: ', features[0])
+    print('feature shape: ', feature.shape)
+    print('-----------------------------')
+    print('labels: ', len(labels))
+    print('labels ex: ', labels[0])
+    print('labels shape: ', feature.shape)
+
     return features, labels
 
 
@@ -101,6 +107,9 @@ def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
     plt.plot(thresholds, precisions[:-1], 'b--', label ='precision')
     plt.plot(thresholds, recalls[:-1], 'g--', label = 'recall')
     plt.legend()
+    plt.xlabel("Threshold", fontsize=16)        # Not shown
+    plt.grid(True)                              # Not shown
+    
 
 ## 재현율에 대한 정밀도곡선을 그려서 정밀도/재현율 trade-off확인해보기
 def plot_precision_vs_recall(precisions, recalls):
@@ -109,3 +118,18 @@ def plot_precision_vs_recall(precisions, recalls):
     plt.ylabel("Precision", fontsize=16)
     plt.axis([0, 1, 0, 1])
     plt.grid(True)
+
+def plot_roc_curve(fpr, tpr, label=None):
+    plt.plot(fpr, tpr, linewidth=2, label=label)
+    plt.plot([0, 1], [0, 1], 'k--') # 대각 점선
+    plt.axis([0, 1, 0, 1])                                    # Not shown in the book
+    plt.xlabel('False Positive Rate (Fall-Out)', fontsize=16) # Not shown
+    plt.ylabel('True Positive Rate (Recall)', fontsize=16)    # Not shown
+    plt.grid(True)   
+
+
+#evaluation
+
+print("Precision Score: ", precision_score(y_train_fragile, y_train_pred))
+print("Recall Score: ", recall_score(y_train_fragile, y_train_pred))
+print("F1-Score: ", f1_score(y_train_fragile, y_train_pred))
