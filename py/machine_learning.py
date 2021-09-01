@@ -24,3 +24,36 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import roc_curve
 from sklearn.metrics import roc_auc_score
+
+
+#model
+def sav_model_loading (model_path):
+    model_file = open(model_path, 'rb')
+    model = pickle.load(model_file)
+    model_file.close()
+    print(model)
+    return model
+
+
+
+
+
+# dataset
+
+def feature_label_maker(pickle_name, data):
+    pick_in = open(pickle_name, 'wb')
+    pickle.dump(data, pick_in)
+    pick_in.close()
+
+    pick_in = open(pickle_name, 'rb')
+    data = pickle.load(pick_in)
+    pick_in.close()
+
+    features = []
+    labels = []
+
+    for feature, label in data:
+        features.append(feature)
+        labels.append(label)
+        
+    return features, labels
