@@ -1,3 +1,7 @@
+#warnings
+import warnings
+warnings.filterwarnings('ignore')
+
 import os
 import numpy as np
 import cv2
@@ -23,6 +27,10 @@ from sklearn.multiclass import OneVsRestClassifier
 
 #svm
 from sklearn.svm import SVC
+
+
+#ensemble
+from sklearn.ensemble import RandomForestClassifier
 
 #validation
 from sklearn.model_selection import cross_val_predict
@@ -130,6 +138,6 @@ def plot_roc_curve(fpr, tpr, label=None):
 
 #evaluation
 
-print("Precision Score: ", precision_score(y_train_fragile, y_train_pred))
-print("Recall Score: ", recall_score(y_train_fragile, y_train_pred))
-print("F1-Score: ", f1_score(y_train_fragile, y_train_pred))
+# print("Precision Score: ", precision_score(y_train_fragile, y_train_pred))
+# print("Recall Score: ", recall_score(y_train_fragile, y_train_pred))
+# print("F1-Score: ", f1_score(y_train_fragile, y_train_pred))
