@@ -9,7 +9,7 @@ import joblib #scikit learn 모델저장
 
 # scikit learn
 import sklearn
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
 
 #datset
 from sklearn.model_selection import train_test_split
