@@ -214,20 +214,21 @@ def get_display_string(pred_class, label_dict):
 
 def predict (model, real_path):
     img_list = get_img(real_path)
-    for num, i in enumerate (img_list):
-       # order_list=[]
-        #order_list.append('image_number{}'.format(num))
-        resized_frame = cv2.resize(i, (IMG_SIZE,IMG_SIZE))
-        frame_for_pred = prepare_image_for_prediction( resized_frame )
-        pred_vec = model.predict(frame_for_pred)
-        #print('pred_vec')
-        #print(pred_vec)
-        pred_class =[]
-        confidence = np.round(pred_vec.max(),2)
-        pc = pred_vec.argmax()
-        pred_class.append( (pc, confidence) )
-        results=[]
-        txt = get_display_string(pred_class, label_dict)
-        print(txt)
-        results.append(txt)
-    return order_list, results, pred_class
+    try:
+        for num, i in enumerate (img_list):
+            resized_frame = cv2.resize(i, (IMG_SIZE,IMG_SIZE))
+            frame_for_pred = prepare_image_for_prediction( resized_frame )
+            pred_vec = model.predict(frame_for_pred)
+            pred_class =[]
+            confidence = np.round(pred_vec.max(),2)
+            pc = pred_vec.argmax()
+            pred_class.append( (pc, confidence) )
+            txt = get_display_string(pred_class, label_dict)
+            i = cv2.cvtColor(i, cv2.COLOR_BGR2RGB)
+            show(i)
+            print(txt)
+    except TypeError:
+        print('error')
+        pass
+    else:
+        pass
