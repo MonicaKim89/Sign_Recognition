@@ -193,3 +193,41 @@ class AttLayer(keras.layers.Layer):
         self.supports_masking = True
         self.attention_dim = attention_dim
         super(AttLayer, self).__init__(**kwargs)
+
+
+def prepare_image_for_prediction( img):
+       
+    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
+    # The below function inserts an additional dimension at the axis position provided
+    img = np.expand_dims(img, axis=0)
+    # perform pre-processing that was done when resnet model was trained.
+    return preprocess_input(img)
+
+def get_display_string(pred_class, label_dict):
+    txt = ""
+    for c, confidence in pred_class:
+        print(c)
+        print(confidence)
+        txt += label_dict[c]
+        txt += '['+ str(confidence) +']'
+    return txt
+
+def predict (model, real_path):
+    img_list = get_img(real_path)
+    for num, i in enumerate (img_list):
+       # order_list=[]
+        #order_list.append('image_number{}'.format(num))
+        resized_frame = cv2.resize(i, (IMG_SIZE,IMG_SIZE))
+        frame_for_pred = prepare_image_for_prediction( resized_frame )
+        pred_vec = model.predict(frame_for_pred)
+        #print('pred_vec')
+        #print(pred_vec)
+        pred_class =[]
+        confidence = np.round(pred_vec.max(),2)
+        pc = pred_vec.argmax()
+        pred_class.append( (pc, confidence) )
+        results=[]
+        txt = get_display_string(pred_class, label_dict)
+        print(txt)
+        results.append(txt)
+    return order_list, results, pred_class
