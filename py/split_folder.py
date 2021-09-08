@@ -1,4 +1,4 @@
-import split_folder
+import splitfolders
 import os
 
 file_path =''
