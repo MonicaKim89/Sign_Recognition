@@ -1,11 +1,14 @@
-# sign_detection
+# Sign_detection
+
+## Purpose
+For RPA, SCADA in Logistics Warehouse
 
 ## Dataset
 1. Archived International Logistic Mark from Google IMG, Naver
 2. Cropped individually
 3. Preprocessed (200,200,3) - opencv
 
-## Training
+## Training Methods
 1. Machine Learning
     - Binary Classification
     - Random Foreset
