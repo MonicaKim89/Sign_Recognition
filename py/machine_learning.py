@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import seaborn as sns
 
 import pickle
 import random
@@ -168,7 +169,6 @@ def get_eval_by_threshold(y_test , pred_proba_c1, thresholds):
 
 
 def confusion_plot(confusion_array, x):
-    sns.set()
     plt.figure(figsize = (x,x))
     ax= plt.subplot() 
     sns.heatmap(confusion_array, annot=True, fmt='g', ax=ax)
