@@ -132,6 +132,7 @@ def plot_precision_vs_recall(precisions, recalls):
     plt.axis([0, 1, 0, 1])
     plt.grid(True)
 
+
 def plot_roc_curve(fpr, tpr, label=None):
     plt.plot(fpr, tpr, linewidth=2, label=label)
     plt.plot([0, 1], [0, 1], 'k--') # 대각 점선
