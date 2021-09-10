@@ -165,3 +165,13 @@ def get_eval_by_threshold(y_test , pred_proba_c1, thresholds):
         custom_predict = binarizer.transform(pred_proba_c1)
         print('임곗값:',custom_threshold)
         get_clf_eval(y_test , custom_predict)
+
+
+def confusion_plot(confusion_array, x):
+    sns.set()
+    plt.figure(figsize = (x,x))
+    ax= plt.subplot() 
+    sns.heatmap(confusion_array, annot=True, fmt='g', ax=ax)
+    ax.set_xlabel('Predicted labels')
+    ax.set_ylabel('True labels')
+    ax.set_title('Confusion matrix')
