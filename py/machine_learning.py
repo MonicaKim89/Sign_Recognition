@@ -154,6 +154,8 @@ def get_clf_eval(y_test , pred):
     # ROC-AUC print 추가
     print('정확도: {0:.4f}, 정밀도: {1:.4f}, 재현율: {2:.4f},\
     F1: {3:.4f}, AUC:{4:.4f}'.format(accuracy, precision, recall, f1, roc_auc))
+    
+    return confusion
 
 
 def get_eval_by_threshold(y_test , pred_proba_c1, thresholds):
