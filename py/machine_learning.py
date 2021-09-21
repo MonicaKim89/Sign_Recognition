@@ -69,7 +69,7 @@ def sav_model_loading (model_path):
 # dataset
 def data_for_ml (categories, data_path, num):
     data = []
-
+    img_path=[]
     
 
     for category in categories:
@@ -79,9 +79,11 @@ def data_for_ml (categories, data_path, num):
 
         for img in os.listdir(file_path):
             imgpath = os.path.join(file_path, img)
+            img_path.append(imgpath)
 
             try: 
-                pet_img = cv2.imread(imgpath, 0)
+                pet_img = cv2.imread(imgpath, cv2.IMREAD_COLOR)
+                pet_img = cv2.cvtColor(pet_img, cv2.COLOR_BGR2RGB)
                 pet_img = cv2.resize(pet_img, (num, num))
 
                 images = np.array(pet_img).flatten()
@@ -92,7 +94,7 @@ def data_for_ml (categories, data_path, num):
                 pass
 
     print('data수: ', len(data))
-    return data
+    return data, img_path, label
 
 def feature_label_maker(data):
     features=[]
