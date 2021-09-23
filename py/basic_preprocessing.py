@@ -75,8 +75,8 @@ def direct_show(path):
 
 
 def INPUT_IMG(path):
-    img = cv2.imread(path, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    i = cv2.imread(path, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(i, cv2.COLOR_BGR2RGB)
     return img
 
 
@@ -116,7 +116,7 @@ def get_img(path):
     files= glob.glob(data_path)
     img_list=[]
     for f1 in files:
-        img = cv2.imread(f1)
+        img = cv2.imread(f1, cv2.IMREAD_COLOR)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img_list.append(img)
 #     print('이미지수',len(img_list))
