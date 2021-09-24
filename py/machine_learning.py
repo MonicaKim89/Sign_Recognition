@@ -94,7 +94,7 @@ def data_for_ml (categories, data_path, num):
                 pass
 
     print('data수: ', len(data))
-    return data, img_path, label
+    return data
 
 def feature_label_maker(data):
     features=[]
