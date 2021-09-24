@@ -49,11 +49,12 @@ elif platform.system() == 'Windows': # Windows 환경 폰트 설정
 #scikit-learn
 from sklearn.utils import class_weight
 from sklearn.metrics import classification_report
+from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
+from skimage.io import imread
 
 #tensorflow
 import tensorflow as tf
-from tensorflow.keras.applications import ResNet50
-from tensorflow.keras.applications import VGG16
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
 from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -78,6 +79,8 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.layers import Dense, Dropout, Activation
 from tensorflow.keras.optimizers import SGD
 
+#keras
+from keras.applications.imagenet_utils import decode_predictions
 
 #dataset
 import splitfolders
