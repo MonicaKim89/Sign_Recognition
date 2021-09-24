@@ -13,11 +13,12 @@ import pickle
 import random
 import joblib #scikit learn 모델저장
 from collections import Counter
-
+from scipy import interp
 
 # scikit learn
 import sklearn
-# from sklearn.externals import joblib
+from sklearn import svm, datasets
+from sklearn.preprocessing import label_binarize
 
 #datset
 from sklearn.model_selection import train_test_split
@@ -32,7 +33,6 @@ from sklearn.multiclass import OneVsRestClassifier
 
 #svm
 from sklearn.svm import SVC
-
 
 #ensemble
 from sklearn.ensemble import RandomForestClassifier
@@ -49,9 +49,12 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import precision_score, recall_score, accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import classification_report
+from sklearn.metrics import roc_auc_score
+
+
 
 
 # model
