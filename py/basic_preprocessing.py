@@ -209,3 +209,13 @@ def save_fig(fig_id, tight_layout=True, fig_extension="png", resolution=300):
     if tight_layout:
         plt.tight_layout()
     plt.savefig(path, format=fig_extension, dpi=resolution)
+
+#show_comparing
+def show_img_compar(img_1, img_2 ):
+    f, ax = plt.subplots(1, 2, figsize=(10,10))
+    ax[0].imshow(img_1)
+    ax[1].imshow(img_2)
+    ax[0].axis('off') #hide the axis
+    ax[1].axis('off')
+    f.tight_layout()
+    plt.show()
