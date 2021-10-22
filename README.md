@@ -12,7 +12,7 @@ For RPA, SCADA in Logistics Warehouse
 1. Machine Learning
     - Binary Classification
     - Random Foreset
-    - One of One (One os Rest)
+    - One of One (One of Rest)
     - LightGBM (lower auc comparing RF)
 2. Image Classification
     - VGG16 (pretrained, imagenet)
