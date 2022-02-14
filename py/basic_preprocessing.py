@@ -114,7 +114,8 @@ def img_names(path):
     data_names = []
     for num, i in enumerate(files):
         if i[-1] =='g':
-            data_names.append(i)
+            k = i.split('.jpg')[0]
+            data_names.append(k)
     #         num +=1
     # print('이미지 수', num)
     return data_names
