@@ -107,8 +107,17 @@ def count_img(path):
     print('이미지 수', num)
 
 
-# In[4]:
-
+###이미지파일명
+def img_names(path):
+    os.chdir(path)
+    files = os.listdir(path)
+    data_names = []
+    for num, i in enumerate(files):
+        if i[-1] =='g':
+            data_names.append(i)
+    #         num +=1
+    # print('이미지 수', num)
+    return data_names
 
 #이미지 불러오기
 def get_img(path):
