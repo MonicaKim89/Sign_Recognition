@@ -22,6 +22,8 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 
+cor_list =[]
+
 def detect(save_img=False):
     source, weights, view_img, save_txt, imgsz = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
@@ -120,9 +122,14 @@ def detect(save_img=False):
                         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
                     
                     save_obj = True
+                    
                     if save_obj:
+                        cordinates = (int(xyxy[0]), int(xyxy[1]), int(xyxy[2] - xyxy[0]), int(xyxy[3] - xyxy[1]))
+                        # print(cordinates)
+                        cor_list.append(cordinates)
                         for k in range(len(det)):
-                            x,y,w,h=int(xyxy[0]), int(xyxy[1]), int(xyxy[2] - xyxy[0]), int(xyxy[3] - xyxy[1])                   
+                            x,y,w,h=int(xyxy[0]), int(xyxy[1]), int(xyxy[2] - xyxy[0]), int(xyxy[3] - xyxy[1])
+                           
                             img_ = im0.astype(np.uint8)
                             crop_img=img_[y:y+ h, x:x + w]                          
                                 
@@ -141,6 +148,11 @@ def detect(save_img=False):
 
             # Print time (inference + NMS)
             print(f'{s}Done. ({t2 - t1:.3f}s)')
+            # print(cor_list)
+            f = open('/content/drive/MyDrive/save_box/test.txt', 'w')
+            for i in cor_list:
+                f.write(str(i)+'\n')
+            f.close()
 
             # Stream results
             if view_img:
