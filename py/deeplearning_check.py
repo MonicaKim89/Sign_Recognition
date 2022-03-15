@@ -81,7 +81,7 @@ from tensorflow.keras.optimizers import SGD
 
 #keras
 from keras.applications.imagenet_utils import decode_predictions
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 
 
 #dataset
