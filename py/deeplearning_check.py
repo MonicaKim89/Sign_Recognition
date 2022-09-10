@@ -53,9 +53,9 @@ from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from skimage.io import imread
 
 #tensorflow
-# import tensorflow as tf
-import tensorflow.compat.v2 as tf # 애플실리콘
-tf.enable_v2_behavior() #되는지 확인
+import tensorflow as tf
+# import tensorflow.compat.v2 as tf # 애플실리콘
+# tf.enable_v2_behavior() #되는지 확인
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
