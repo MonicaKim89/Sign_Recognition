@@ -13,7 +13,7 @@ from FINAL_IMG_PREP import *
 # In[1]:
 
 
-def vid_info(path, codec, name):
+def vid_info(path, codec, name, fps):
     cap = cv2.VideoCapture(path)
     print(cap)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -21,7 +21,7 @@ def vid_info(path, codec, name):
     #재생할 파일의 높이 얻기
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
     #재생할 파일의 프레임 레이트 얻기
-    fps = cap.get(cv2.CAP_PROP_FPS)
+    # fps = cap.get(cv2.CAP_PROP_FPS)
     
     #codec
     fourcc = cv2.VideoWriter_fourcc(*codec)

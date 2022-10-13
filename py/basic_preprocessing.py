@@ -14,9 +14,9 @@ from sklearn.linear_model import LinearRegression
 import seaborn as sns
 import glob
 import math
-from IPython import get_ipython
-get_ipython().run_line_magic('matplotlib', 'inline')
-from IPython.display import Image
+# from IPython import get_ipython
+# get_ipython().run_line_magic('matplotlib', 'inline')
+# from IPython.display import Image
 
 #cv
 import cv2
